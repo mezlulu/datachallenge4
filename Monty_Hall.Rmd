@@ -1,0 +1,37 @@
+---
+title: "datachallenge4"
+author: "menglu zhao"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here are some tips:
+
+First write a function that does one play of the Monty Hall simulation. Have an argument switch which tells if the contestant uses the strategy of switching the door (switch = TRUE) or (switch = FALSE).
+
+
+Next use an if else statement to show what door is revealed if (1) the contestant guessed the correct door or (2) if the contestant did not guess the correct door
+Use an if statement to switch guesses of the door if switch = TRUE
+return a logical (TRUE/FALSE) indicating if the game was won or not
+
+Next write a function that performs the simulation multiple times. Have an argument for the number of times to run the simulation (n) and the strategy (switch). Check out the replicate() function which may be useful.
+Turn in an html of your R markdown document with the functions and a test of the functions with 1000 plays with/without using the switching strategy. Don’t forget to put your GitHub repo at the top of your R markdown!
+
+```{r}
+# if else statement to show which door is revealed 
+door_to_reveal <- function(doors, prize_in_door, contestant_door) {
+  if (prize_in_door == contestant_door) {
+    reveal <- sample(doors[-contestant_door], size = 1)
+  } else {
+    reveal <- doors[-c(contestant_door, prize_in_door)]
+  }
+  return(reveal)
+}
+
+
+```
+
