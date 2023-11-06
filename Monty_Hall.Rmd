@@ -9,18 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Here are some tips:
-
-First write a function that does one play of the Monty Hall simulation. Have an argument switch which tells if the contestant uses the strategy of switching the door (switch = TRUE) or (switch = FALSE).
-
-
-Next use an if else statement to show what door is revealed if (1) the contestant guessed the correct door or (2) if the contestant did not guess the correct door
-Use an if statement to switch guesses of the door if switch = TRUE
-return a logical (TRUE/FALSE) indicating if the game was won or not
-
-Next write a function that performs the simulation multiple times. Have an argument for the number of times to run the simulation (n) and the strategy (switch). Check out the replicate() function which may be useful.
-Turn in an html of your R markdown document with the functions and a test of the functions with 1000 plays with/without using the switching strategy. Don’t forget to put your GitHub repo at the top of your R markdown!
-
+# Monty Hall Simulation
 ```{r}
 # if else statement to show which door is revealed 
 door_to_reveal <- function(doors, prize_in_door, contestant_door) {
@@ -39,11 +28,25 @@ play_monty_hall <- function(switch = FALSE) { # switch = false indicate the cont
   contestant_door <- sample(doors, 1) # the door that contestant pick
   reveal <- door_to_reveal(doors, prize_door, contestant_door) # monty reveals a door which does not have the prize and was not picked by the contestant
 
-  if (switch) {
+  if (switch == TRUE) {
     contestant_door <- setdiff(doors, c(contestant_door, reveal))
   }
   return (contestant_door == prize_door)  # return a logical (TRUE/FALSE) indicating if the game was won or not
 }
+
+# simulation n times
+simulate_monty_hall <- function(n, switch = FALSE) { 
+  wins <- replicate(n, play_monty_hall(switch))
+  mean(wins) # the proportion of wins
+}
+
+# test of the functions with 1000 plays
+set.seed(123) 
+without_switch <- simulate_monty_hall(1000, switch = FALSE)
+with_switch <- simulate_monty_hall(1000, switch = TRUE)
+
+without_switch * 100 # percentage of wining without switch
+with_switch * 100 # percentage of wining with switch
 
 ```
 
